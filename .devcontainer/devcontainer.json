@@ -1,0 +1,54 @@
+{
+  "name": "Node.js Development",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+
+  // Configure tool-specific properties
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.vscode-typescript-next",
+        "ms-vscode.vscode-json",
+        "ms-vscode.vscode-eslint",
+        "ms-vscode-remote.remote-containers",
+        "esbenp.prettier-vscode"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh"
+      }
+    }
+  },
+
+  // Use 'forwardPorts' to make a list of ports available locally
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "Application",
+      "onAutoForward": "notify"
+    }
+  },
+
+  // Use 'mounts' to mount volumes or bind mount folders
+  "mounts": [
+    "source=devcontainer-bashhistory,target=/commandhistory,type=volume"
+  ],
+
+  // Use 'postCreateCommand' to run commands after the container is created
+  // Global packages are now installed in the Dockerfile
+  "postCreateCommand": "echo 'DevContainer ready for Node.js development!'",
+
+  // Use 'postStartCommand' to run commands after the container starts
+  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
+
+  // Environment variables
+  "containerEnv": {
+    "NPM_CONFIG_PREFIX": "/home/node/.npm-global"
+  },
+
+  // User for the container
+  "remoteUser": "node",
+
+  // Use 'initializeCommand' to run commands on the host before the container starts
+  "initializeCommand": "echo 'Initializing Node.js development environment...'"
+}
